@@ -1,4 +1,4 @@
-var version = "v23.02.07"
+var version = "v26.10.26"
 var wasmVersion = "wasm2"
 var shareTargetVersion = "share-target"
 
@@ -10,6 +10,7 @@ var urls = [
 	"img/apple-touch-icon.png",
 	"img/favicon.png",
 	"index.html",
+	"js/asrc.js",
 	"js/cli-worker.js",
 	"js/custom-audio.js",
 	"js/dark-toggle.js",
