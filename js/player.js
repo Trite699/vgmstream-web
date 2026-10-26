@@ -165,7 +165,21 @@ function convertFile(file){
 async function convertDir(files, inputFilename){
 	fade(1, true)
 	try{
+		var originalFilename = inputFilename
+		var original = Array.prototype.find.call(files, file => file.name === inputFilename)
+		var unwrapped = false
+		if(original && await Asrc.isAsrc(original)){
+			// RE Engine asrc: pass the embedded audio to vgmstream instead
+			var inner = await Asrc.unwrap(original)
+			files = Array.prototype.map.call(files, file => file === original ? inner : file)
+			inputFilename = inner.name
+			unwrapped = true
+		}
 		var response = await cliWorker.send("convertDir", files, inputFilename)
+		if(unwrapped && response){
+			response.inputFilename = originalFilename
+			response.outputFilename = originalFilename + ".wav"
+		}
 	}finally{
 		fade(0)
 	}
